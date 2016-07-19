@@ -127,6 +127,7 @@ public class Main {
                     System.out.println("Persona 2:");
                     String pers4=sc.next();
                     System.out.println(socialNetwork.getConexionPath(pers3,pers4));
+                    System.out.println("-----------------------------------------");
                     break;
                 case 11:
                     System.out.println("Grado de conexión entre dos personas");

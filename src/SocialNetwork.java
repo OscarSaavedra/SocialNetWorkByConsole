@@ -4,6 +4,10 @@ import java.util.*;
 
 public class SocialNetwork{
 
+    private static final String reset = "\u001B[0m";
+    private static final String rojo= "\u001B[31m";
+    private static final String azul = "\u001B[34m";
+
     private Map<String ,Persona> personsByName =new HashMap<>();
     private Map<Long,Persona> personsById=new HashMap<>();
     private BiMap<Persona, Persona>biMapParejas= HashBiMap.create();
@@ -22,9 +26,11 @@ public class SocialNetwork{
         cola.add(primeroLista);
         visitado.add(primeroLista);
 
+        boolean encontrado=false;
             while(!cola.isEmpty()){
                 primeroLista = cola.poll();
                 if (primeroLista.equals(personaDestino)){
+                    encontrado=true;
                     break;
                 }else{
                     for(Persona amigo : getFriends(primeroLista)){
@@ -36,10 +42,15 @@ public class SocialNetwork{
                     }
                 }
             }
-            for(Persona persona = personaDestino; persona != null; persona = predecesor.get(persona)) {
-                camino.add(persona);
+
+            if (encontrado){
+                for(Persona persona = personaDestino; persona != null; persona = predecesor.get(persona)) {
+                    camino.add(persona);
+                }
+                Collections.reverse(camino);
+                }else{
+                System.out.println("No hay conexión posible o una de las personas no existe");
             }
-            Collections.reverse(camino);
             return camino;
         }
 
@@ -195,17 +206,17 @@ public class SocialNetwork{
     }
 
     public String getMenu(){
-        return "[1]Consultar personas por Nombre"+"\n"
-        +"[2]Consultar personas por ID"+"\n"
-        +"[3]Consultar los amigos de una persona"+"\n"
-        +"[4]Consultar la pareja de una persona"+"\n"
-        +"[5]Consultar los amigos de la pareja de una persona"+"\n"
-        +"[6]Consultar las parejas de de los amigos de una persona"+"\n"
-        +"[7]Mostrar la cantidad de amigos de una persona"+"\n"
-        +"[8]Mostrar el ranking de personas con mas amigos"+"\n"
-        +"[9]Averiguar si dos personas pertenecen al mismo grafo"+"\n"
-        +"[10]Camino entre dos personas"+"\n"
-        +"[11]Grado de conexión entre dos personas (incluyendo conexión de parejas)"+"\n"
-        +"[12]Salir"+"\n";
+        return "[1]"+azul+" Consultar personas por Nombre"+reset+"\n"
+        +"[2]"+azul+" Consultar personas por ID"+reset+"\n"
+        +"[3]"+azul+" Consultar los amigos de una persona"+reset+"\n"
+        +"[4]"+azul+" Consultar la pareja de una persona"+reset+"\n"
+        +"[5]"+azul+" Consultar los amigos de la pareja de una persona"+reset+"\n"
+        +"[6]"+azul+" Consultar las parejas de de los amigos de una persona"+reset+"\n"
+        +"[7]"+azul+" Mostrar la cantidad de amigos de una persona"+reset+"\n"
+        +"[8]"+azul+" Mostrar el ranking de personas con mas amigos"+reset+"\n"
+        +"[9]"+azul+" Averiguar si dos personas pertenecen al mismo grafo"+reset+"\n"
+        +"[10]"+azul+" Camino entre dos personas"+reset+"\n"
+        +"[11]"+azul+" Grado de conexión entre dos personas (incluyendo conexión de parejas)"+reset+"\n"
+        +"[12]"+rojo+" Salir"+reset+"\n";
     }
 }
